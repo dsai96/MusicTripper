@@ -12,12 +12,13 @@ $(document).ready(function() {
     }, function(response, status) {
       // console.log(response);
       if (response == 'undefined') {
-        $("#responseArea").html(distance);
-        var distance = "Please enter valid addresses";
+        // $("#responseArea").html(distance);
+        // var distance = "Please enter valid addresses";
       } else {
-        var distance = response.rows[0].elements[0].duration.text;
+        distance = response.rows[0].elements[0].duration.text;
         console.log(distance);
-        $("#responseArea").html(distance);
+        return distance;
+        // $("#responseArea").html(distance);
       }
     });
     // event.preventDefault();
@@ -33,9 +34,8 @@ $(document).ready(function() {
 
     $('#get').submit(function(event, inputArtists) {
      event.preventDefault();
-     getDistance();
      var artists = getArtistNames();
-     var data = {"playlistName": $('#playlistName').val(), "artists": artists};
+     var data = {"playlistName": $('#playlistName').val(), "artists": artists, "distance": getDistance()};
      $.ajax({
          url: '/playlists/create',
          data: data,
