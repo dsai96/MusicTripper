@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+          <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+          <title>Roadtripper</title>
+          <meta name="description" content="">
+          <meta name="author" content="">
+          <!-- Bootstrap core CSS -->
+          <link href="/css/bootstrap.min.css" rel="stylesheet" type = "text/css">
+          <link href="/css/index.css" rel="stylesheet" type = "text/css">
+
+          <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGB5UCMBvU_mxxztJPq9qwY61j62FnjAc"></script>
+          <script src="/js/index.js" type = "text/javascript"></script>
+    </head>
+
+    <body>
+        <div class="site-wrapper">
+          <div class="site-wrapper-inner">
+            <div class="cover-container">
+              <div class="masthead clearfix">
+                <div class="inner">
+                  <h3 class="masthead-brand">Road Trip Jams</h3>
+                  <nav class="nav nav-masthead">
+                    <a class="nav-link active" href="/">Home</a>
+                    <a class="login-button" href="/playlists">Playlists</a>
+                    <a class="login-button" href="/playlists/create">Login to Spotify</a>
+                  </nav>
+                </div>
+              </div>
+
+              <div class="inner cover">
+                <h1>Let's take a trip.</h1>
+                <br><br><br><br>
+                <div class="form">
+                    <form id="get" >
+                        Start Address <input type="text" id="start"><br></br>
+                        Destination Address <input type="text" id="end"><br></br>
+                        Playlist Name <input type="text" id="playlistName"><br></br>
+                        <h6>Artists</h6>
+                        <div class="input_fields_wrap">
+                          <div class= "textbox"><input type="text" name="mytext[]" class = "artist"></div><br>
+                        </div>
+                        <button class="btn btn-secondary" id="add_field_button">Add Another Artist</button> <br><br>
+                        <input type="submit" class="btn btn-lg btn-secondary" href="/playlists/create" value="Create Playlist!" >
+                        <!-- <a href="/auth/spotify"><button>Create Playlist!</button></a> -->
+                      </form>
+
+                </div>
+                <div id = "responseArea"></div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
