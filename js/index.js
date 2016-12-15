@@ -1,7 +1,8 @@
 
 $(document).ready(function() {
 
-  function getDistance(event) {
+//calls the Google api to find the duration of trip in text and value
+  function getDistance(event, callback) {
     var start = $('#start').val();
     var end = $('#end').val();
     var service = new google.maps.DistanceMatrixService;
@@ -10,45 +11,48 @@ $(document).ready(function() {
       destinations: [end],
       travelMode: 'DRIVING',
     }, function(response, status) {
-      // console.log(response);
       if (response == 'undefined') {
-        // $("#responseArea").html(distance);
-        // var distance = "Please enter valid addresses";
       } else {
-        distance = response.rows[0].elements[0].duration.text;
-        console.log(distance);
-        return distance;
-        // $("#responseArea").html(distance);
+        distance = response.rows[0].elements[0].duration;
+        callback(distance);
       }
     });
-    // event.preventDefault();
   };
+
 
   function getArtistNames() {
     var artistNames = [];
     for (i = 0; i < $(".artist").length; i++) {
       artistNames.push($(".artist")[i].value);
     }
+    //required to return artistsNames as an array
+    if ($(".artist").length == 0){
+      artistNames = [$(".artist").value];
+    }
     return artistNames;
   }
 
+  //post request to send form data to the server and handle Spotify calls
     $('#get').submit(function(event, inputArtists) {
      event.preventDefault();
-     var artists = getArtistNames();
-     var data = {"playlistName": $('#playlistName').val(), "artists": artists, "distance": getDistance()};
-     $.ajax({
-         url: '/playlists/create',
-         data: data,
-         type: 'POST',
-         dataType: 'json',
-         traditional: true,
-         crossDomain: true,
-         success: function(result) {
-             console.log(result)
-             console.log("Post Req completed!");
-         }
-     });
+     getDistance(event, submitFormData)
     });
+
+    function submitFormData(distance){
+      var artists = getArtistNames();
+      var data = {"playlistName": $('#playlistName').val(), "artists": artists, "durationText": distance.text, "durationValue": distance.value};
+      $.ajax({
+          url: '/playlists/create',
+          data: data,
+          type: 'POST',
+          dataType: 'json',
+          traditional: true,
+          crossDomain: true,
+          success: function(result) {
+              window.location.href = "/login";
+          }
+      });
+    }
 
     var maxBoxes = 10;
     var textboxCount = 1;
@@ -58,7 +62,7 @@ $(document).ready(function() {
       e.preventDefault();
       if(textboxCount < maxBoxes){
           textboxCount++;
-          $(".input_fields_wrap").append('<div><input type="text" name="mytext[]" class = "artist"/><a href="#" class="remove_field"> Remove</a></div><br>');
+          $(".input_fields_wrap").append('<div class="textbox"><input type="text" class = "artist"/><a href="#" class="remove_field"> Remove</a><br><br></div>');
       }
     });
 

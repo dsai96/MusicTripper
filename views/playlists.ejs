@@ -4,14 +4,13 @@
           <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
           <meta http-equiv="X-UA-Compatible" content="IE=edge">
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-          <title>Roadtripper</title>
+          <title>MusicTripper</title>
           <meta name="description" content="">
           <meta name="author" content="">
           <link href="/css/bootstrap.min.css" rel="stylesheet" type = "text/css">
           <link href="/css/index.css" rel="stylesheet" type = "text/css">
           <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
           <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGB5UCMBvU_mxxztJPq9qwY61j62FnjAc"></script>
-          <!-- <script src="/js/index.js" type = "text/javascript"></script> -->
     </head>
 
     <body>
@@ -20,26 +19,32 @@
             <div class="cover-container">
               <div class="masthead clearfix">
                 <div class="inner">
-                  <h3 class="masthead-brand">Road Trip Jams</h3>
+                  <h3 class="masthead-brand">MusicTripper</h3>
                   <nav class="nav nav-masthead">
                     <a class="login-button" href="/">Home</a>
                     <a class="nav-link active" href="/playlists">Playlists</a>
-                    <a class="login-button" href="/auth/spotify">Login to Spotify</a>
                   </nav>
                 </div>
               </div>
 
               <div class="inner cover">
-                <h1>Choose a playlist to add!</h1>
+                <h1>Check out recently made playlists!</h1>
                 <br><br><br><br>
                   <table style="width:100%">
                   <tr>
-                    <th>Playlist</th>
-                    <th>Duration</th>
-                    <th>Artists</th>
-                    <th>Add</th>
+                    <th style="text-align:center">Playlist</th>
+                    <th style="text-align:center">Duration</th>
+                    <th style="text-align:center">Artists</th>
                   </tr>
-                
+
+                  <% for (var playlist in allplaylists) {   %>
+                  <tr class="Class">
+                    <td style="text-align:center"> <%= allplaylists[playlist]['playlistName'] %> </td>
+                    <td style="text-align:center"> <%= allplaylists[playlist]['durationText'] %> </td>
+                    <td style="text-align:center"> <%= allplaylists[playlist]['artists'] %> </td>
+                  </tr>
+                  <% } %>
+
                 </table>
                 <div id = "responseArea"></div>
               </div>
