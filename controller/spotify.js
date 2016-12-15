@@ -33,7 +33,7 @@ module.exports.authorization = function (req, res) {
     for (i = 0; i < listOfArtists.length; i++) {
         spotifyApi.searchArtists(listOfArtists[i]).then(function(data2) {
             artistIds.push(data2.body.artists.items[0].id);
-            setTimeout(1000*i, spotifyApi.getArtistTopTracks(data2.body.artists.items[0].id, 'US')
+            setTimeout(spotifyApi.getArtistTopTracks(data2.body.artists.items[0].id, 'US')
               .then(function(data3) {
                 URISforArtists = [];
                 for (var j = 0; j < data3.body.tracks.length; j++) {
@@ -43,6 +43,7 @@ module.exports.authorization = function (req, res) {
                   }}
                   spotifyApi.addTracksToPlaylist(userID, playlistId, URISforArtists)
                   .then(function(trackData) {
+                    // res.redirect("/playlists");
                     console.log('Added tracks to playlist!');
                     if (i == listOfArtists.length) {
                       relatedArtistNames = []
@@ -55,7 +56,7 @@ module.exports.authorization = function (req, res) {
                               if (q == artistData.body.artists.length - 1 ){
                                 console.log("****************************************");
                                 console.log(relatedArtistNames);
-                                setTimeout(1000, addSongsToPlaylist(userID, spotifyApi, relatedArtistNames, duration, playlistId));
+                                setTimeout(addSongsToPlaylist(userID, spotifyApi, relatedArtistNames, duration, playlistId), 1000);
                               }
                             }
 
@@ -68,7 +69,7 @@ module.exports.authorization = function (req, res) {
                   }, function(err) {
                     console.log('Something went wrong!', err);
                   });
-                })); 
+                }), 1000*i);
                 }, function(err) {
                 console.log('Something went wrong!', err);
               });
@@ -100,11 +101,10 @@ module.exports.authentication = function(req, res) {
         spotifyApi.createPlaylist(userID, playlistName, { 'public' : true }).then(function(data) {
                 console.log('Created playlist!');
                 addSongsToPlaylist(userID, spotifyApi, artists, duration, data.body.id);
-
               }, function(err) {
                 console.log('Something went wrong in Creating playlist!', err);
               });
-
+              res.redirect("/playlists");
 
     }, function(err) {
       console.log('Something went wrong in Authorization!', err);
