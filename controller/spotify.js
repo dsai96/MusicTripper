@@ -100,7 +100,7 @@ module.exports.authentication = function(req, res) {
         var userID = data2.body.id;
         spotifyApi.createPlaylist(userID, playlistName, { 'public' : true }).then(function(data) {
                 console.log('Created playlist!');
-                addSongsToPlaylist(userID, spotifyApi, artists, duration, data.body.id);
+                setTimeout(addSongsToPlaylist(userID, spotifyApi, artists, duration, data.body.id), 1000);
               }, function(err) {
                 console.log('Something went wrong in Creating playlist!', err);
               });
